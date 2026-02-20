@@ -10,8 +10,8 @@ const products = [
         brand: "adidas",
         price: "$69",
         description: "High quality cotton T-Shirt. Comfortable and stylish.",
-        mainImg: "product/f1.jpg",
-        thumbs: ["product/f1.jpg", "product/f2.jpg", "product/f3.jpg", "product/f4.jpg"]
+        mainImg: "product/4.jpg",
+        thumbs: ["product/4.jpg", "product/f2.jpg", "product/f3.jpg", "product/f4.jpg"]
     },
     {
         id: 2,

@@ -80,7 +80,7 @@ button.white {
 }
 
 #header .logose {
-    height: 80px;
+    height: 60px;
     width: auto;
 }
 
@@ -133,7 +133,7 @@ button.white {
 /* HERO SECTION                  */
 /* ============================= */
 #hero {
-    background-image: url(banner/hero4.png);
+    background-image: url(img/homeimgg.jpg);
     height: 90vh;
     width: 100%;
     background-size: cover;

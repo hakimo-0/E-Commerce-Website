@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="navbar-container"></div>
-    <script src="navbar.js"></script>
+    <?php include 'navbar.php'; ?>
 
 <section id="page-header" class="blog-header">
     <h2>#read more</h2>

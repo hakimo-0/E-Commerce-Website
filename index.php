@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,15 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <div id="navbar-container"></div>
-    <script src="navbar.js"></script>
+    <?php include 'navbar.php'; ?>
 
     <section id="hero">
         <h4>Trade-in-offer</h4>
         <h2>Super value deals</h2>
         <h1>On all products</h1>
         <p>Save more with coupons & up to 70% off!</p>
-        <button>Shop Now</button>
+        <button onclick="window.location.href='shop.php'">Shop Now</button>
     </section>
 
     <section id="feature" class="section-p1">
@@ -29,60 +27,30 @@
         <div class="fe-box"><img src="img/f6.png" alt="Support"><h6>Support</h6></div>
     </section>
 
-    <!-- ===== FEATURED PRODUCTS (f1-f8) ===== -->
+    <!-- FEATURED PRODUCTS -->
     <section id="product1" class="section-p1">
         <h2>Featured Products</h2>
         <p>Summer Collection New Modern Design</p>
         <div class="pro-container">
-
-            <div class="pro" onclick="window.location.href='product.html?id=1'">
-                <img src="product/f1.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$69</h4></div>
+            <?php
+            include 'api/db.php';
+            $result = mysqli_query($conn, "SELECT * FROM products ORDER BY created_at DESC LIMIT 8");
+            
+            while ($product = mysqli_fetch_assoc($result)):
+            ?>
+            <div class="pro" onclick="window.location.href='product.php?id=<?= $product['id'] ?>'">
+                <img src="<?= htmlspecialchars($product['main_img']) ?>" alt="Product">
+                <div class="des">
+                    <span><?= htmlspecialchars($product['brand']) ?></span>
+                    <h5><?= htmlspecialchars($product['name']) ?></h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <h4>$<?= number_format($product['price'], 2) ?></h4>
+                </div>
                 <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
             </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=2'">
-                <img src="product/f2.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$78</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=3'">
-                <img src="product/f3.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$59</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=4'">
-                <img src="product/f4.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$79</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=5'">
-                <img src="product/f5.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$99</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=6'">
-                <img src="product/f6.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$87</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=7'">
-                <img src="product/f7.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$94</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=8'">
-                <img src="product/f8.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$24</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
+            <?php endwhile; ?>
         </div>
     </section>
 
@@ -90,63 +58,6 @@
         <h4>Repair Services</h4>
         <h2>Up to <span>70% Off</span> - All T-Shirts & Accessories</h2>
         <button class="normal">Explore More</button>
-    </section>
-
-    <!-- ===== NEW ARRIVALS (n1-n8) ===== -->
-    <section id="product1" class="section-p1">
-        <h2>New Arrivals</h2>
-        <p>Summer Collection New Modern Design</p>
-        <div class="pro-container">
-
-            <div class="pro" onclick="window.location.href='product.html?id=9'">
-                <img src="product/n1.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$69</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=10'">
-                <img src="product/n2.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$78</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=11'">
-                <img src="product/n3.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$59</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=12'">
-                <img src="product/n4.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$79</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=13'">
-                <img src="product/n5.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$99</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=14'">
-                <img src="product/n6.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$87</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=15'">
-                <img src="product/n7.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$94</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-            <div class="pro" onclick="window.location.href='product.html?id=16'">
-                <img src="product/n8.jpg" alt="Product">
-                <div class="des"><span>adidas</span><h5>Carton Astronaut T-Shirts</h5><div class="star"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><h4>$24</h4></div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
-            </div>
-
-        </div>
     </section>
 
     <section id="sm-banner" class="section-p1">
@@ -194,8 +105,7 @@
         <div class="col">
             <img class="logo" src="img/logo2.png" alt="">
             <h4>Contact</h4>
-            <p><strong>Address:</strong> N 760 bloc 11,  Ain Ati 1, 
-                Errachidia,Marocco</p>
+            <p><strong>Address:</strong> N 760 bloc 11, Ain Ati 1, Errachidia, Morocco</p>
             <p><strong>Phone:</strong> 06 2222 3656 / (+212) 01 234 6709</p>
             <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
             <div class="follow">

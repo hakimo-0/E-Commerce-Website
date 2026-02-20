@@ -8,57 +8,44 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+    <?php include 'navbar.php'; ?>
 
-    <!-- NAVBAR -->
-    <section id="header">
-        <a href="index.html"><img src="img/yubix.png" class="logose" alt="Logo"></a>
-        <div>
-            <ul id="navbar">
-                <li><a href="index.html">Home</a></li>
-                <li><a class="active" href="shop.html">Shop</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li id="lg-bag"><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
-                <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
-            </ul>
-        </div>
-        <div id="mobile">
-            <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
-            <i id="bar" class="fas fa-outdent"></i>
+    <section id="page-header">
+        <h2>#stayhome</h2>
+        <p>Save more with coupons & up to 70% off!</p>
+    </section>
+
+    <section id="product1" class="section-p1">
+        <div class="pro-container">
+            <?php
+            // ✅ Qra men database
+            include 'api/db.php';
+            $result = mysqli_query($conn, "SELECT * FROM products ORDER BY created_at DESC");
+            
+            while ($product = mysqli_fetch_assoc($result)):
+            ?>
+            <div class="pro" onclick="window.location.href='product.php?id=<?= $product['id'] ?>'">
+                <img src="<?= htmlspecialchars($product['main_img']) ?>" alt="Product">
+                <div class="des">
+                    <span><?= htmlspecialchars($product['brand']) ?></span>
+                    <h5><?= htmlspecialchars($product['name']) ?></h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <h4>$<?= number_format($product['price'], 2) ?></h4>
+                </div>
+                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
+            </div>
+            <?php endwhile; ?>
         </div>
     </section>
 
-    <!-- PRODUCT DETAILS - kaytmla dynamiquement b JS -->
-    <section id="prodetails">
-        <div class="single-pro-image">
-            <img src="" width="100%" class="MainImg" alt="">
-            <div class="small-img-group" id="thumbs-container"></div>
-        </div>
-
-        <div class="single-pro-details">
-            <h6 id="pro-brand">Home / T-Shirt</h6>
-            <h4 id="pro-name"></h4>
-            <h2 id="pro-price"></h2>
-
-            <select>
-                <option>Select Size</option>
-                <option>XL</option>
-                <option>XXL</option>
-                <option>Large</option>
-                <option>Medium</option>
-                <option>Small</option>
-            </select>
-
-            <input type="number" value="1">
-            <button class="normal">Add To Cart</button>
-
-            <h4>Product Details</h4>
-            <span id="pro-desc"></span>
-        </div>
+    <section id="pagination" class="section-p1">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#"><i class="fa-solid fa-arrow-right"></i></a>
     </section>
 
-    <!-- NEWSLETTER -->
     <section id="newsletter" class="section-p1 section-m1">
         <div class="newstext">
             <h4>Sign Up For Newsletter</h4>
@@ -70,13 +57,11 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="section-p1">
         <div class="col">
             <img class="logo" src="img/logo2.png" alt="">
             <h4>Contact</h4>
-            <p><strong>Address:</strong> N 760 bloc 11,  Ain Ati 1, 
-                Errachidia,Marocco</p>
+            <p><strong>Address:</strong> N 760 bloc 11, Ain Ati 1, Errachidia, Morocco</p>
             <p><strong>Phone:</strong> 06 2222 3656 / (+212) 01 234 6709</p>
             <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
             <div class="follow">
@@ -121,9 +106,6 @@
         </div>
     </footer>
 
-    <!-- 1. Load products data -->
-    <script src="products.js"></script>
-    <!-- 2. Load main script -->
     <script src="script.js"></script>
 </body>
 </html>
