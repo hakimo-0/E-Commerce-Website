@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $thumb4      = mysqli_real_escape_string($conn, $_POST['thumb4']);
     $sql = "INSERT INTO products (name,brand,price,description,main_img,thumb1,thumb2,thumb3,thumb4)
             VALUES ('$name','$brand','$price','$description','$main_img','$thumb1','$thumb2','$thumb3','$thumb4')";
-    if (mysqli_query($conn, $sql)) { $success = "Product zdat b njah! ✅"; }
+    if (mysqli_query($conn, $sql)) { $success = "Product added successfully! "; }
     else { $error = "Khata: " . mysqli_error($conn); }
 }
 ?>
@@ -23,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <title>Add Product - KIMO</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
@@ -48,11 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <div class="navbar">
-    <h2>🛍️ KIMO Admin</h2>
+    <h2>🛒 KIMO Admin</h2>
     <a href="dashboard.php">← Dashboard</a>
 </div>
 <div class="container">
-    <h3>➕ Add New Product</h3>
+    <h3><i class="fa-solid fa-cart-plus"></i> Add New Product</h3>
     <?php if ($success) echo "<div class='success'>$success</div>"; ?>
     <?php if ($error)   echo "<div class='error'>$error</div>"; ?>
     <form method="POST">
@@ -70,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" name="thumb4" placeholder="Thumb 4: product/f4.jpg">
             </div>
         </div>
-        <button type="submit">✅ Add Product</button>
+        <button type="submit"> Add Product</button>
     </form>
     <a href="dashboard.php" class="back">← Back to Dashboard</a>
 </div>

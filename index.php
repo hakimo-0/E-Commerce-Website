@@ -18,14 +18,7 @@
         <button onclick="window.location.href='shop.php'">Shop Now</button>
     </section>
 
-    <section id="feature" class="section-p1">
-        <div class="fe-box"><img src="img/f1.png" alt="Free Shipping"><h6>Free Shipping</h6></div>
-        <div class="fe-box"><img src="img/f2.png" alt="Online Order"><h6>Online Order</h6></div>
-        <div class="fe-box"><img src="img/f3.png" alt="Save Money"><h6>Save Money</h6></div>
-        <div class="fe-box"><img src="img/f4.png" alt="Promotions"><h6>Promotions</h6></div>
-        <div class="fe-box"><img src="img/f5.png" alt="Happy Sell"><h6>Happy Sell</h6></div>
-        <div class="fe-box"><img src="img/f6.png" alt="Support"><h6>Support</h6></div>
-    </section>
+    
 
     <!-- FEATURED PRODUCTS -->
     <section id="product1" class="section-p1">
@@ -103,7 +96,7 @@
 
     <footer class="section-p1">
         <div class="col">
-            <img class="logo" src="img/logo2.png" alt="">
+             <a href="index.php" class="logo-nav">KIMO</a>
             <h4>Contact</h4>
             <p><strong>Address:</strong> N 760 bloc 11, Ain Ati 1, Errachidia, Morocco</p>
             <p><strong>Phone:</strong> 06 2222 3656 / (+212) 01 234 6709</p>

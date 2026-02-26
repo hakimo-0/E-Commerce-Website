@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $thumb4      = mysqli_real_escape_string($conn, $_POST['thumb4']);
     $sql = "UPDATE products SET name='$name',brand='$brand',price='$price',description='$description',main_img='$main_img',thumb1='$thumb1',thumb2='$thumb2',thumb3='$thumb3',thumb4='$thumb4' WHERE id=$id";
     if (mysqli_query($conn, $sql)) {
-        $success = "Product tbddat b njah! ✅";
+        $success = "Product updated successfully! ";
         $result  = mysqli_query($conn, "SELECT * FROM products WHERE id=$id");
         $product = mysqli_fetch_assoc($result);
     } else { $error = "Khata: " . mysqli_error($conn); }
@@ -54,11 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <div class="navbar">
-    <h2>🛍️ KIMO Admin</h2>
+    <h2 href="dashboard.php">🛒 KIMO Admin</h2>
     <a href="dashboard.php">← Dashboard</a>
 </div>
 <div class="container">
-    <h3>✏️ Edit Product #<?= $id ?></h3>
+    <h3>✎ Edit Product #<?= $id ?></h3>
     <?php if ($success) echo "<div class='success'>$success</div>"; ?>
     <?php if ($error)   echo "<div class='error'>$error</div>"; ?>
     <?php if ($product['main_img']): ?>

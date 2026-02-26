@@ -20,6 +20,8 @@ $total = mysqli_num_rows($result);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <title>Dashboard - KIMO SHOP</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
@@ -57,9 +59,9 @@ $total = mysqli_num_rows($result);
 </head>
 <body>
 <div class="navbar">
-    <h2>🛍️ KIMO Admin Dashboard</h2>
+    <h2>🛒 KIMO Admin Dashboard</h2>
     <div class="nav-links">
-        <a href="../index.html" target="_blank">View Store</a>
+        <a href="../index.php" target="_blank">View Store</a>
         <a href="logout.php" class="logout">Logout</a>
     </div>
 </div>
@@ -67,28 +69,28 @@ $total = mysqli_num_rows($result);
 <div class="container">
     <div class="stats">
         <div class="stat-card">
-            <div class="stat-icon">📦</div>
+            <div class="stat-icon"><i class="fa-solid fa-box-open"></i></div>
             <div class="stat-info">
                 <h3><?= $total ?></h3>
                 <p>Total Products</p>
             </div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon">✅</div>
+            <div class="stat-icon"><i class="fa-solid fa-square-check"></i></div>
             <div class="stat-info">
                 <h3><?= $total ?></h3>
                 <p>Active</p>
             </div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon">👥</div>
+            <div class="stat-icon"><i class="fa-solid fa-user"></i></div>
             <div class="stat-info">
                 <h3>0</h3>
                 <p>Orders Today</p>
             </div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon">💰</div>
+            <div class="stat-icon"><i class="fa-solid fa-sack-dollar"></i></div>
             <div class="stat-info">
                 <h3>$0</h3>
                 <p>Revenue</p>
@@ -97,7 +99,7 @@ $total = mysqli_num_rows($result);
     </div>
 
     <div class="header-section">
-        <h3>📋 Products Management</h3>
+        <h3><i class="fa-solid fa-clipboard-list"></i> Products Management</h3>
         <a href="add-product.php" class="add-btn">+ Add New Product</a>
     </div>
 
@@ -127,8 +129,8 @@ $total = mysqli_num_rows($result);
                     <td><?= htmlspecialchars($row['brand']) ?></td>
                     <td>$<?= number_format($row['price'], 2) ?></td>
                     <td class="actions">
-                        <a href="edit-product.php?id=<?= $row['id'] ?>" class="edit">✏️ Edit</a>
-                        <a href="?delete=<?= $row['id'] ?>" class="delete" onclick="return confirm('Wach bghiti tmsa7 had product?')">🗑️ Delete</a>
+                        <a href="edit-product.php?id=<?= $row['id'] ?>" class="edit"><i class="fa-solid fa-pen"></i> Edit</a>
+                        <a href="?delete=<?= $row['id'] ?>" class="delete" onclick="return confirm('Do you want to delete this product?')"><i class="fa-regular fa-trash-can"></i> Delete</a>
                     </td>
                 </tr>
                 <?php endwhile; ?>

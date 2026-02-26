@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: dashboard.php");
         exit;
     } else {
-        $error = "Username aw password khata!";
+        $error = "The username or password is incorrect.";
     }
 }
 ?>
@@ -14,10 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <title>Admin Login - KIMO SHOP</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-        body{background:linear-gradient(135deg,#12d0d6,#088178);display:flex;justify-content:center;align-items:center;height:100vh}
+        body{background:linear-gradient(135deg,#465b52,#088178);display:flex;justify-content:center;align-items:center;height:100vh}
         .box{background:#fff;padding:40px;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.2);width:380px}
         .logo{text-align:center;margin-bottom:25px}
         .logo h2{color:#12d0d6;font-size:26px}
@@ -32,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="box">
     <div class="logo">
-        <h2>🛍️ KIMO Admin</h2>
+        <h2> KIMO Admin</h2>
         <p>Panel dyal gestion des produits</p>
     </div>
     <?php if (!empty($error)) echo "<div class='error'>$error</div>"; ?>
