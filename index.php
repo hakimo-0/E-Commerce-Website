@@ -37,8 +37,7 @@
                     <span><?= htmlspecialchars($product['brand']) ?></span>
                     <h5><?= htmlspecialchars($product['name']) ?></h5>
                     <div class="star">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"><
-                        /i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
                     <h4>$<?= number_format($product['price'], 2) ?></h4>
                 </div>
