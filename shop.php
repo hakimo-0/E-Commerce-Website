@@ -10,6 +10,9 @@
 <body>
     <?php include 'navbar.php'; ?>
 
+    <!-- TOAST -->
+    <div id="toast" class="toast"></div>
+
     <section id="page-header">
         <h2>#stayhome</h2>
         <p>Save more with coupons & up to 70% off!</p>
@@ -18,10 +21,8 @@
     <section id="product1" class="section-p1">
         <div class="pro-container">
             <?php
-            // ✅ Qra men database
             include 'api/db.php';
             $result = mysqli_query($conn, "SELECT * FROM products ORDER BY created_at DESC");
-            
             while ($product = mysqli_fetch_assoc($result)):
             ?>
             <div class="pro" onclick="window.location.href='product.php?id=<?= $product['id'] ?>'">
@@ -34,7 +35,17 @@
                     </div>
                     <h4>$<?= number_format($product['price'], 2) ?></h4>
                 </div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
+                <!-- Cart + Wishlist buttons -->
+                <div class="pro-buttons">
+                    <button class="pro-cart-btn" title="Add to Cart"
+                        onclick="event.stopPropagation(); quickAddCart(<?= $product['id'] ?>, <?= json_encode($product['name']) ?>, <?= json_encode($product['brand']) ?>, <?= floatval($product['price']) ?>, <?= json_encode($product['main_img']) ?>)">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </button>
+                    <button class="pro-wish-btn" title="Add to Wishlist" id="wish-<?= $product['id'] ?>"
+                        onclick="event.stopPropagation(); quickWishlist(<?= $product['id'] ?>, <?= json_encode($product['name']) ?>, <?= json_encode($product['brand']) ?>, <?= floatval($product['price']) ?>, <?= json_encode($product['main_img']) ?>, this)">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                </div>
             </div>
             <?php endwhile; ?>
         </div>
@@ -86,8 +97,8 @@
         <div class="col">
             <h4>My Account</h4>
             <a href="#">Sign in</a>
-            <a href="#">View Cart</a>
-            <a href="#">My Wishlist</a>
+            <a href="cart.php">View Cart</a>
+            <a href="wishlist.php">My Wishlist</a>
             <a href="#">Track My Order</a>
             <a href="#">Help</a>
         </div>
@@ -107,5 +118,71 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+    // ========================
+    // TOAST
+    // ========================
+    function showToast(msg, type = 'success') {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.className = 'toast show ' + type;
+        setTimeout(() => toast.className = 'toast', 2800);
+    }
+
+    // ========================
+    // QUICK ADD TO CART (no size)
+    // ========================
+    function quickAddCart(id, name, brand, price, img) {
+        let cart = JSON.parse(localStorage.getItem('kimo_cart') || '[]');
+        const key = id + '-default';
+        const existing = cart.find(i => i.key === key);
+
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push({ key, id, name, brand, price, img, size: 'Default', qty: 1 });
+        }
+
+        localStorage.setItem('kimo_cart', JSON.stringify(cart));
+        updateCartBadge();
+        showToast('✅ Added to cart!');
+    }
+
+    // ========================
+    // QUICK WISHLIST
+    // ========================
+    function quickWishlist(id, name, brand, price, img, btn) {
+        let wishlist = JSON.parse(localStorage.getItem('kimo_wishlist') || '[]');
+        const idx = wishlist.findIndex(i => i.id === id);
+        const icon = btn.querySelector('i');
+
+        if (idx === -1) {
+            wishlist.push({ id, name, brand, price, img });
+            icon.className = 'fa-solid fa-heart';
+            btn.classList.add('active');
+            showToast('❤️ Added to wishlist!');
+        } else {
+            wishlist.splice(idx, 1);
+            icon.className = 'fa-regular fa-heart';
+            btn.classList.remove('active');
+            showToast('💔 Removed from wishlist', 'warn');
+        }
+
+        localStorage.setItem('kimo_wishlist', JSON.stringify(wishlist));
+        updateWishlistBadge();
+    }
+
+    // Mark wishlist items on load
+    window.addEventListener('load', () => {
+        const wishlist = JSON.parse(localStorage.getItem('kimo_wishlist') || '[]');
+        wishlist.forEach(item => {
+            const btn = document.getElementById('wish-' + item.id);
+            if (btn) {
+                btn.querySelector('i').className = 'fa-solid fa-heart';
+                btn.classList.add('active');
+            }
+        });
+    });
+    </script>
 </body>
 </html>

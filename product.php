@@ -1,7 +1,6 @@
 <?php
 include 'api/db.php';
 
-// Jib product men DB
 $id = intval($_GET['id']);
 $result = mysqli_query($conn, "SELECT * FROM products WHERE id=$id");
 $product = mysqli_fetch_assoc($result);
@@ -23,10 +22,12 @@ if (!$product) {
 <body>
     <?php include 'navbar.php'; ?>
 
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast"></div>
+
     <section id="prodetails">
         <div class="single-pro-image">
             <img src="<?= htmlspecialchars($product['main_img']) ?>" width="100%" class="MainImg" alt="">
-            
             <div class="small-img-group">
                 <?php 
                 $thumbs = [$product['thumb1'], $product['thumb2'], $product['thumb3'], $product['thumb4']];
@@ -35,7 +36,7 @@ if (!$product) {
                 ?>
                 <div class="small-img-col">
                     <img src="<?= htmlspecialchars($thumb) ?>" 
-                         width="100%" 
+                         width="100%"
                          class="small-img<?= $index === 0 ? ' active' : '' ?>" 
                          onclick="changeImg(this)" 
                          alt="">
@@ -52,17 +53,26 @@ if (!$product) {
             <h4><?= htmlspecialchars($product['name']) ?></h4>
             <h2>$<?= number_format($product['price'], 2) ?></h2>
 
-            <select>
-                <option>Select Size</option>
+            <select id="size-select">
+                <option value="">Select Size</option>
+                <option>XS</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
                 <option>XL</option>
                 <option>XXL</option>
-                <option>Large</option>
-                <option>Medium</option>
-                <option>Small</option>
             </select>
 
-            <input type="number" value="1">
-            <button class="normal">Add To Cart</button>
+            <input type="number" id="qty-input" value="1" min="1" max="99">
+
+            <div class="pro-action-btns">
+                <button class="normal" id="add-to-cart-btn" onclick="addToCart()">
+                    <i class="fa-solid fa-bag-shopping"></i> Add To Cart
+                </button>
+                <button class="wishlist-toggle-btn" id="wishlist-toggle-btn" onclick="toggleWishlist()">
+                    <i class="fa-regular fa-heart" id="wishlist-icon"></i>
+                </button>
+            </div>
 
             <h4>Product Details</h4>
             <span><?= nl2br(htmlspecialchars($product['description'])) ?></span>
@@ -109,8 +119,8 @@ if (!$product) {
         <div class="col">
             <h4>My Account</h4>
             <a href="#">Sign in</a>
-            <a href="#">View Cart</a>
-            <a href="#">My Wishlist</a>
+            <a href="cart.php">View Cart</a>
+            <a href="wishlist.php">My Wishlist</a>
             <a href="#">Track My Order</a>
             <a href="#">Help</a>
         </div>
@@ -130,14 +140,96 @@ if (!$product) {
     </footer>
 
     <script>
-    // Image switcher
+    // ========================
+    // PRODUCT DATA (from PHP)
+    // ========================
+    const PRODUCT = {
+        id:      <?= $product['id'] ?>,
+        name:    <?= json_encode($product['name']) ?>,
+        brand:   <?= json_encode($product['brand']) ?>,
+        price:   <?= floatval($product['price']) ?>,
+        img:     <?= json_encode($product['main_img']) ?>
+    };
+
+    // ========================
+    // IMAGE SWITCHER
+    // ========================
     function changeImg(clicked) {
         document.querySelector('.MainImg').src = clicked.src;
-        document.querySelectorAll('.small-img').forEach(img => {
-            img.classList.remove('active');
-        });
+        document.querySelectorAll('.small-img').forEach(img => img.classList.remove('active'));
         clicked.classList.add('active');
     }
+
+    // ========================
+    // TOAST
+    // ========================
+    function showToast(msg, type = 'success') {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.className = 'toast show ' + type;
+        setTimeout(() => toast.className = 'toast', 2800);
+    }
+
+    // ========================
+    // CART
+    // ========================
+    function addToCart() {
+        const size = document.getElementById('size-select').value;
+        const qty  = parseInt(document.getElementById('qty-input').value) || 1;
+
+        if (!size) {
+            showToast('⚠️ Choose a size first!', 'warn');
+            return;
+        }
+
+        let cart = JSON.parse(localStorage.getItem('kimo_cart') || '[]');
+        const key = PRODUCT.id + '-' + size;
+        const existing = cart.find(i => i.key === key);
+
+        if (existing) {
+            existing.qty += qty;
+        } else {
+            cart.push({ key, id: PRODUCT.id, name: PRODUCT.name, brand: PRODUCT.brand, price: PRODUCT.price, img: PRODUCT.img, size, qty });
+        }
+
+        localStorage.setItem('kimo_cart', JSON.stringify(cart));
+        updateCartBadge();
+        showToast('✅ Added to cart!');
+    }
+
+    // ========================
+    // WISHLIST
+    // ========================
+    function toggleWishlist() {
+        let wishlist = JSON.parse(localStorage.getItem('kimo_wishlist') || '[]');
+        const idx = wishlist.findIndex(i => i.id === PRODUCT.id);
+        const btn  = document.getElementById('wishlist-toggle-btn');
+        const icon = document.getElementById('wishlist-icon');
+
+        if (idx === -1) {
+            wishlist.push({ id: PRODUCT.id, name: PRODUCT.name, brand: PRODUCT.brand, price: PRODUCT.price, img: PRODUCT.img });
+            icon.className = 'fa-solid fa-heart';
+            btn.classList.add('active');
+            showToast('❤️ Added to wishlist!');
+        } else {
+            wishlist.splice(idx, 1);
+            icon.className = 'fa-regular fa-heart';
+            btn.classList.remove('active');
+            showToast('💔 Removed from wishlist', 'warn');
+        }
+
+        localStorage.setItem('kimo_wishlist', JSON.stringify(wishlist));
+        updateWishlistBadge();
+    }
+
+    // Check wishlist state on load
+    window.addEventListener('load', () => {
+        const wishlist = JSON.parse(localStorage.getItem('kimo_wishlist') || '[]');
+        if (wishlist.find(i => i.id === PRODUCT.id)) {
+            document.getElementById('wishlist-icon').className = 'fa-solid fa-heart';
+            document.getElementById('wishlist-toggle-btn').classList.add('active');
+        }
+    });
     </script>
 </body>
 </html>
