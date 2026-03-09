@@ -70,8 +70,7 @@ if (!$product) {
                     <i class="fa-solid fa-bag-shopping"></i> Add To Cart
                 </button>
                 <button class="wishlist-toggle-btn" id="wishlist-toggle-btn" onclick="toggleWishlist()">
-                    <i class="fa-regular fa-heart" id="wishlist-icon"></i>
-                </button>
+                <i class="fa-regular fa-heart ai-style-change-1" id="wishlist-icon"></i>                </button>
             </div>
 
             <h4>Product Details</h4>
@@ -79,21 +78,11 @@ if (!$product) {
         </div>
     </section>
 
-    <section id="newsletter" class="section-p1 section-m1">
-        <div class="newstext">
-            <h4>Sign Up For Newsletter</h4>
-            <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
-        </div>
-        <div class="form">
-            <input type="text" placeholder="Your email address">
-            <button class="normal">Sign Up</button>
-        </div>
-    </section>
-
+   
     <footer class="section-p1">
         <div class="col">
-            <img class="logo" src="img/logo2.png" alt="">
-            <h4>Contact</h4>
+        <a href="index.php" class="logo-nav">KIMO</a>
+        <h4>Contact</h4>
             <p><strong>Address:</strong> N 760 bloc 11, Ain Ati 1, Errachidia, Morocco</p>
             <p><strong>Phone:</strong> 06 2222 3656 / (+212) 01 234 6709</p>
             <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>

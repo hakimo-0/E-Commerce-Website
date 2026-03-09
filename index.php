@@ -41,17 +41,13 @@
                     </div>
                     <h4>$<?= number_format($product['price'], 2) ?></h4>
                 </div>
-                <div class="cart"><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></div>
+                <div class="cart"><a href="#"><i class="fa-solid fa-bag-shopping"></i></a></div>
             </div>
             <?php endwhile; ?>
         </div>
     </section>
 
-    <section id="banner" class="section-m1">
-        <h4>Repair Services</h4>
-        <h2>Up to <span>70% Off</span> - All T-Shirts & Accessories</h2>
-        <button class="normal">Explore More</button>
-    </section>
+ 
 
     <section id="sm-banner" class="section-p1">
         <div class="banner-box">
@@ -83,16 +79,7 @@
         </div>
     </section>
 
-    <section id="newsletter" class="section-p1 section-m1">
-        <div class="newstext">
-            <h4>Sign Up For Newsletter</h4>
-            <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
-        </div>
-        <div class="form">
-            <input type="text" placeholder="Your email address">
-            <button class="normal">Sign Up</button>
-        </div>
-    </section>
+    
 
     <footer class="section-p1">
         <div class="col">
